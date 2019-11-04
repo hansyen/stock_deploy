@@ -1,0 +1,1 @@
+Taiwan yahoo stock
