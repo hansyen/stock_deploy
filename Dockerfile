@@ -23,4 +23,4 @@ ENTRYPOINT ["python"]
 # 執行start_api_test.py
 CMD ["start_stock.py"]
 
-# FROM nginx
+FROM nginx
