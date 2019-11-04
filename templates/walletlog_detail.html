@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <table border= 1 cellpadding= 5 cellspacing= 10>
+            <legend>Wallet Log Detail</legend>
+
+            <tr><th>User ID</th><td>{{ user_info.uid }}</td></tr>
+            <tr><th>Ticket Number</th><td>{{ user_info.tid }}</td></tr>
+            <tr><th>Log Type</th><td>{{ user_info.log_type }}</td></tr>
+            <tr><th>Amount</th><td>{{ user_info.amount }}</td></tr>
+            <tr><th>Currency</th><td>{{ user_info.currency }}</td></tr>
+            <tr><th>Description</th><td>{{ user_info.description }}</td></tr>
+            <tr><th>Status</th><td>{{ user_info.status }}</td></tr>
+            <tr><th>Create Time</th><td>{{ user_info.date }}</td></tr>
+
+        </table>
+    </div>
+    <a href="{{ url_for('walletlog.wallet_log_view') }}">Go Back DC Trade Log</a>
+{% endblock content %}

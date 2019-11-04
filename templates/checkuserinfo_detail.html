@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+
+        <table border= 1 cellpadding= 5 cellspacing= 10>
+            <legend>User Verify Detail</legend>
+
+            <tr><th>User ID</th><td>{{ user_info.uid }}</td></tr>
+            <tr><th>E-mail</th><td>{{ user_info.email }}</td></tr>
+            <tr><th>Phone</th><td>{{ user_info.phone }}</td></tr>
+            <tr><th>ID_card</th><td>{{ user_info.id_card }}</td></tr>
+            <tr><th>Bill</th><td>{{ user_info.bill }}</td></tr>
+
+
+        </table>
+    </div>
+        <a href="{{ url_for('kyc.check_userinfo_view') }}">Go Back KYC</a>
+{% endblock content %}

@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% from "_formhelpers.html" import render_field %}
+        <form method=post>
+
+            {{ render_field(form.select) }}
+            0: Unverify, 1:Verify
+            {{ render_field(form.search) }}
+
+            <input type=submit value=Search>
+            <a href="{{ url_for('kyc.check_userinfo_view') }}">Clean Search Results</a>
+        </form>
+    </div>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="content-section">
+            <legend>Check User Verify</legend>
+            <table border= 1 cellpadding= 5 cellspacing= 10>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>User ID</th>
+                    <th>E-mail</th>
+                    <th>Phone</th>
+                    <th>ID_card</th>
+                    <th>Bill</th>
+
+                <tr>
+
+                {% for UserVerify in results.items %}
+                    <tr>
+                        <td><a href="{{ url_for('kyc.check_userinfo_detail', uid=UserVerify.uid) }}">Detail</a></td>
+                        <td><a href="{{ url_for('kyc.check_userinfo_edit', uid=UserVerify.uid) }}">{{ UserVerify.uid }}</a></td>
+                        <td>{{ UserVerify.email }}</td>
+                        <td>{{ UserVerify.phone }}</td>
+                        <td>{{ UserVerify.id_card }}</td>
+                        <td>{{ UserVerify.bill }}</td>
+                    <tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+    <div>
+        {% for page_num in results.iter_pages(left_edge=1, right_edge=1, left_current=4, right_current=5) %}
+            {% if page_num %}
+                {% if results.page == page_num %}
+                    <a class="btn btn-info mb-4" href="{{ url_for('kyc.check_userinfo_view', page=page_num, search=search, form=form, search_results=search_results) }}">{{ page_num }}</a>
+                {% else %}
+                    <a class="btn btn-outline-info mb-4" href="{{ url_for('kyc.check_userinfo_view', page=page_num, search=search, form=form, search_results=search_results) }}">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+    </div>
+        <a href="{{ url_for('kyc.check_userinfo_view') }}">Go Back KYC</a>
+{% endblock content %}

@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% from "_formhelpers.html" import render_field %}
+        <form method=post>
+
+            {{ render_field(form.select) }}
+            {{ render_field(form.search) }}
+
+            <input type=submit value=Search>
+            <a href="{{ url_for('withdraw.withdraw_ticket_view') }}">Clean Search Results</a>
+        </form>
+    </div>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="content-section">
+            <legend>WithDraw Ticket</legend>
+
+            <table border= 1 cellpadding= 5 cellspacing= 10>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Ticket NO.</th>
+                    <th>User ID</th>
+                    <th>Bank Account</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Create Time</th>
+
+                <tr>
+                {% for WithDrawTicket in results.items %}    {# results.items列表 #}
+                <tr>
+                    <td><a href="{{ url_for('withdraw.withdrw_ticket_detail', td=WithDrawTicket.td) }}">Detail</a></td>
+                    <td><a href="{{ url_for('withdraw.withdrw_ticket_edit', td=WithDrawTicket.td) }}">{{ WithDrawTicket.td }}</a></td>
+                    <td>{{ WithDrawTicket.uid }}</td>
+                    <td>{{ WithDrawTicket.bank_account }}</td>
+                    <td style="word-break: break-all">{{ WithDrawTicket.amount }}</td>  {# word-break: break-all 自動換行 #}
+                    <td>{{ WithDrawTicket.status }}</td>
+                    <td>{{ WithDrawTicket.create_time }}</td>
+
+                <tr>
+                {% endfor %}
+            </table>
+
+        </div>
+    </form>
+    <div>
+        <div>
+        {% for page_num in results.iter_pages(left_edge=1, right_edge=1, left_current=4, right_current=5) %}
+            {% if page_num %}
+                {% if results.page == page_num %}
+                    <a class="btn btn-info mb-4" href="{{ url_for('withdraw.withdraw_ticket_view', uid=uid, bank_account=bank_account, nationality=nationality, td=td, amount=amount, status=status, page=page_num) }}">{{ page_num }}</a>
+                {% else %}
+                    <a class="btn btn-outline-info mb-4" href="{{ url_for('withdraw.withdraw_ticket_view', uid=uid, bank_account=bank_account, nationality=nationality, td=td, amount=amount, status=status, page=page_num) }}">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+        <a href="{{ url_for('withdraw.withdraw_ticket_view') }}">Go Back WithDraw Ticket</a>
+{% endblock content %}

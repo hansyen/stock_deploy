@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block content %}
+    <script type="text/javascript">
+
+    function confSubmit(form) {
+            if (confirm("Are you sure you want to change the status?")) {
+                form.submit();
+            }
+
+            else {
+                alert("You decided not to change the status!");
+            }
+        }
+    </script>
+    <form method="POST" action="">
+        {{ edit_form.hidden_tag() }}
+        <fieldset class="form-group">
+            <div class="content-section">
+                <table border= 1 cellpadding= 5 cellspacing= 10>
+                    <legend>Edit WithDraw Ticket Status</legend>
+
+                        <tr>
+                            <th>Ticket NO.</th>
+                            <th>User ID</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Create Time</th>
+
+                        <tr>
+
+                        <tr>
+                            <td>{{ user_info.td }}</td>
+                            <td>{{ user_info.uid }}</td>
+                            <td>{{ user_info.amount }}</td>
+                            <td>{{ user_info.status }}</td>
+                            <td>{{ user_info.create_time }}</td>
+                        </tr>
+                        <div class="form-group">
+
+                            {% if user_info.status == 'In Process' %}
+
+                                <!--0:Success 1:Create 2:Pending 3:Cancel 4:In Process  5:Fail-->
+                                {% from "_formhelpers.html" import render_field %}
+                                <form method=post>
+                                    {{ render_field(select_form.select) }}
+                                    <br>
+                                    <input type=button onClick="confSubmit(this.form);" value=Change>
+                                </form>
+
+
+                            {% else %}
+                                The ticket's status isn't 'IN_PROCCESS', so you can't change status!
+                            {% endif %}
+                        </div>
+
+                    <div>
+                        Currency Status:
+                    </div>
+
+                </table>
+            </div>
+        </fieldset>
+            <a href="{{ url_for('withdraw.withdraw_ticket_view') }}">Go Back WithDraw Ticket</a>
+
+    </form>
+{% endblock content %}

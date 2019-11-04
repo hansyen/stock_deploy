@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <table border= 1 cellpadding= 5 cellspacing= 10>
+            <legend>Billing Ticket Detail</legend>
+
+            <tr><th>Vender Number</th><td>{{ user_info.web }}</td></tr>
+            <tr><th>Provider</th><td>{{ user_info.provider }}</td></tr>
+            <tr><th>Channel</th><td>{{ user_info.channel }}</td></tr>
+            <tr><th>Ticket Number</th><td>{{ user_info.td }}</td></tr>
+            <tr><th>Third Part Ticket</th><td>{{ user_info.buysafeno }}</td></tr>
+            <tr><th>Amount</th><td>{{ user_info.mn }}</td></tr>
+            <tr><th>Name</th><td>{{ user_info.name }}</td></tr>
+            <tr><th>Note</th><td>{{ user_info.note }}</td></tr>
+            <tr><th>Card last 4 Number</th><td>{{ user_info.card_no }}</td></tr>
+            <tr><th>Payment Term</th><td>{{ user_info.term }}</td></tr>
+            <tr><th>Card Approve Number</th><td>{{ user_info.approve_code }}</td></tr>
+            <tr><th>Card Type</th><td>{{ user_info.card_type }}</td></tr>
+            <tr><th>Error Number</th><td>{{ user_info.errcode }}</td></tr>
+            <tr><th>Error Message</th><td>{{ user_info.errmsg }}</td></tr>
+            <tr><th>Status</th><td>{{ user_info.status }}</td></tr>
+            <tr><th>Ticket's Check Number</th><td>{{ user_info.chk_value_my }}</td></tr>
+            <tr><th>Ticket's Return Number</th><td>{{ user_info.chk_value_from }}</td></tr>
+            <tr><th>Create Time</th><td>{{ user_info.create_time }}</td></tr>
+
+
+
+        </table>
+    </div>
+    <a href="{{ url_for('billing.billing_view') }}">Go Back Billing Ticket</a>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <table border= 1 cellpadding= 5 cellspacing= 10>
+            <legend>WithDraw Ticket Detail</legend>
+
+            <tr><th>User ID</th><td>{{ user_info.uid }}</td></tr>
+            <tr><th>Bank Account</th><td>{{ user_info.bank_account }}</td></tr>
+            <tr><th>Ticket Number</th><td>{{ user_info.td }}</td></tr>
+            <tr><th>Amount</th><td>{{ user_info.amount }}</td></tr>
+            <tr><th>Status</th><td>{{ user_info.status }}</td></tr>
+            <tr><th>Create Time</th><td>{{ user_info.create_time }}</td></tr>
+
+        </table>
+    </div>
+    <a href="{{ url_for('withdraw.withdraw_ticket_view') }}">Go Back WithDraw Ticket</a>
+{% endblock content %}

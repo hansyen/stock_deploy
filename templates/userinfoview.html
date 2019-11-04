@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% from "_formhelpers.html" import render_field %}
+        <form method=post>
+
+            {{ render_field(form.select) }}
+            {{ render_field(form.search) }}
+
+            <input type=submit value=Search>
+            <a href="{{ url_for('userinfo.userinfo_view') }}">Clean Search Results</a>
+        </form>
+    </div>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="content-section">
+            <legend>User Info</legend>
+
+            <table border= 1 cellpadding= 5 cellspacing= 10>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>User ID</th>
+                    <th>Family_Name</th>
+                    <th>First_Name</th>
+                    <th>ID_card</th>
+                    <th>Bill</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                <tr>
+                {% for UserInfo in results.items %}
+                <tr>
+                    <td><a href="{{ url_for('userinfo.userinfo_detail', uid=UserInfo.uid) }}">Detail</a></td>
+                    <td>{{ UserInfo.uid }}</td>
+                    <td>{{ UserInfo.family_name }}</td>
+                    <td>*{{ UserInfo.first_name[1:] }}</td>   {# 讓第一個字變成* #}
+                    <td style="word-break: break-all">{{ UserInfo.id_card }}</td>  {# style="word-break: break-all" 讓data自動換行 #}
+                    <td style="word-break: break-all">{{ UserInfo.bill }}</td>
+                    <td>{{ UserInfo.phone }}</td>
+                    <td>{{ UserInfo.email }}</td>
+                <tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+    <div>
+        <div>
+        {% for page_num in results.iter_pages(left_edge=1, right_edge=1, left_current=4, right_current=5) %}
+            {% if page_num %}
+                {% if results.page == page_num %}
+                    <a class="btn btn-info mb-4" href="{{ url_for('userinfo.userinfo_view', uid=uid, country=country, nationality=nationality, phone=phone, family_name=family_name, first_name=first_name, sex=sex, page=page_num) }}">{{ page_num }}</a>
+                {% else %}
+                    <a class="btn btn-outline-info mb-4" href="{{ url_for('userinfo.userinfo_view', uid=uid, country=country, nationality=nationality, phone=phone, family_name=family_name, first_name=first_name, sex=sex, page=page_num) }}">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+        <a href="{{ url_for('userinfo.userinfo_view') }}">Go Back User Info</a>
+
+{% endblock content %}

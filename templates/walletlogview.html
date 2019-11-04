@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block content %}
+<!--<link rel="stylesheet" type="text/css" href="main.css">-->
+    <div class="content-section">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% from "_formhelpers.html" import render_field %}
+        <form method=post>
+            {{ render_field(form.select) }}
+            Log Type: Deposit:100, Withdraw:200, Transfer:250, Commission:300,
+                        Handling Fee:500, Profit:600, Return Guarantee Deposit:700,
+                        Kick Back Fee:400, Vote Deduct:900, Cancel:999<br>
+            Status: Synchronize complete:0, Wait Synchronize:200
+            {{ render_field(form.search) }}
+            <input type=submit value=Search>
+            <a href="{{ url_for('walletlog.wallet_log_view') }}">Clean Search Results</a>
+        </form>
+    </div>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="content-section">
+            <legend>DC Trade Log</legend>
+            <table border= 1 cellpadding= 5 cellspacing= 10>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Ticket NO.</th>
+                    <th>User ID</th>
+                    <th>Log Type</th>
+                    <th>Amount</th>
+                    <th>Remain</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                <tr>
+                {% for WalletLog in results.items %}
+                <tr>
+                    <td><a href="{{ url_for('walletlog.wallet_log_detail', tid=WalletLog.tid) }}">Detail</a></td>
+                    <td>{{ WalletLog.tid }}</td>
+                    <td>{{ WalletLog.uid }}</td>
+                    <td>{{ WalletLog.log_type }}</td>
+                    <td style="word-break: break-all">{{ WalletLog.amount }}</td>  {# style="word-break: break-all 自動換行 #}
+                    <td style="word-break: break-all">{{ WalletLog.currency }}</td>
+                    <td>{{ WalletLog.status }}</td>
+                    <td>{{ WalletLog.date }}</td>
+                <tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+    <div>
+        <div>
+        {% for page_num in results.iter_pages(left_edge=1, right_edge=1, left_current=4, right_current=5) %}
+            {% if page_num %}
+                {% if results.page == page_num %}
+                    <a class="btn btn-info mb-4" href="{{ url_for('walletlog.wallet_log_view', uid=uid, tid=tid, log_type=log_type, status=status, page=page_num) }}">{{ page_num }}</a>
+                {% else %}
+                    <a class="btn btn-outline-info mb-4" href="{{ url_for('walletlog.wallet_log_view', uid=uid, tid=tid, log_type=log_type, status=status, page=page_num) }}">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+        <a href="{{ url_for('walletlog.wallet_log_view') }}">Go Back DC Trade Log</a>
+{% endblock content %}

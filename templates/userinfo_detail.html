@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <table border= 1 cellpadding= 5 cellspacing= 10>
+            <legend>User Info Detail</legend>
+
+            <tr><th>User ID</th><td>{{ user_info.uid }}</td></tr>
+            <tr><th>Country</th><td>{{ user_info.country }}</td></tr>
+            <tr><th>Nationality</th><td>{{ user_info.nationality }}</td></tr>
+            <tr><th>E-mail</th><td>{{ user_info.email }}</td></tr>
+            <tr><th>Phone</th><td>{{ user_info.phone }}</td></tr>
+            <tr><th>ID Card</th><td>{{ user_info.id_card }}</td></tr>
+            <tr><th>Bill</th><td>{{ user_info.bill }}</td></tr>
+            <tr><th>Family Name</th><td>{{ user_info.family_name }}</td></tr>
+            <tr><th>First Name</th><td>* {{ user_info.first_name[1:] }}</td></tr>
+            <tr><th>Sex</th><td>{{ user_info.sex }}</td></tr>
+            <tr><th>Birthday</th><td>{{ user_info.birthday }}</td></tr>
+
+        </table>
+    </div>
+    <a href="{{ url_for('userinfo.userinfo_view') }}">Go Back User Info</a>
+{% endblock content %}

@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for value in list_u %}
+<td>{{ value }}</br></td>
+{% endfor %}</br>
+
+        <!-- <a href="{{ url_for('classstock.classstock_a_write') }}"><input type="button" value="Export to txt"></a></br> -->
+        <a href="{{ url_for('classstock.class_stock') }}"><input type="button" value="Go Back To Class Stock"></a>
+{% endblock content %}

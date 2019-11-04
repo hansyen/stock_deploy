@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block content %}
+    <script type="text/javascript">
+
+    function confSubmit(form) {
+            if (confirm("Are you sure you want to change the status?")) {
+                form.submit();
+            }
+
+            else {
+                alert("You decided not to change the status!");
+            }
+        }
+    </script>
+    <table>
+        <tr>
+            <td align="center"><img src='http://member.dcedx.com/static/verify_pics/{{ Bill }}' width="400" height="300"/></td>
+            <td align="center"><img src='http://member.dcedx.com/static/verify_pics/{{ ID_card }}' width="400" height="300"/></td>
+        </tr>
+        <tr>
+            <td align="center">Bill</td>
+            <td align="center">ID_card</td>
+        </tr>
+    </table>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <div class="content-section">
+                <table border= 1 cellpadding= 5 cellspacing= 10>
+                    <legend>Edit Status Verify</legend>
+
+                        <tr>
+                            <th>User ID</th>
+                            <th>E-mail</th>
+                            <th>Phone</th>
+                            <th>ID_card</th>
+                            <th>Bill</th>
+
+                        <tr>
+
+                        <tr>
+                            <td>{{ user_info.uid }}</td>
+                            <td>{{ user_info.email }}</td>
+                            <td>{{ user_info.phone }}</td>
+                            <td>{{ user_info.id_card }}</td>
+                            <td>{{ user_info.bill }}</td>
+                        </tr>
+                        <div class="form-group">
+                                {% from "_formhelpers.html" import render_field %}
+                                <form method=post>
+                                    {{ render_field(select_type_form.select) }}
+                                    <input type=button onClick="confSubmit(this.form);" value=Verify>
+
+                                </form>
+
+
+                        </div>
+                    <div class="form-group">
+                        (Are You Sure?)
+                    </div>
+                    <div>
+                        Currency Status:
+                    </div>
+
+                </table>
+            </div>
+        </fieldset>
+            <a href="{{ url_for('kyc.check_userinfo_view') }}">Go Back KYC</a>
+    </form>
+{% endblock content %}
