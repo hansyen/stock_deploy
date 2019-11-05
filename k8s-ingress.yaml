@@ -5,11 +5,22 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: web
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
+#spec:
+#  rules:
+#  - http:
+#      paths:
+#      - path:
+#        backend:
+#          serviceName: k8s-swagger-service
+#          servicePort: 80
 spec:
   rules:
-  - host: ohya.swagger2.com
+  - host: ohya.stock.gogogo
     http:
       paths:
-      - backend:
-          serviceName: k8s-swagger-service
-          servicePort: 7000
+        - path:
+          backend:
+            serviceName: k8s-swagger-service
+            servicePort: 80
