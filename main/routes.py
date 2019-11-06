@@ -18,12 +18,12 @@ def load_user(uid):
 def inject_role():
     return dict(Role=Role)
 
-@main.route("/ohya/")
-@main.route("/ohya/home")
+@main.route("/")
+@main.route("/home")
 def home():
     return render_template('home.html')
 
-@main.route("/ohya/register", methods=['GET', 'POST'])
+@main.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
@@ -42,7 +42,7 @@ def register():
         flash('Your account name already used!', 'warning')
     return render_template('register.html', title='Register', form=form)
 
-@main.route('/ohya/login', methods=["GET", "POST"])
+@main.route('/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():  #對帳密
@@ -59,12 +59,12 @@ def login():
 
     return render_template('login.html', title='Login', form=form)
 
-@main.route('/ohya/logout')
+@main.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('main.login'))
 
-@main.route('/ohya/changeuserinfo', methods=['GET', 'POST'])   #重設密碼
+@main.route('/changeuserinfo', methods=['GET', 'POST'])   #重設密碼
 def change_user_info():
     passwordform = ResetPasswordForm()
     if passwordform.validate_on_submit():
