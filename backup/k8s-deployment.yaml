@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: k8s-jenkins
+        tier: web
     spec:
       volumes:
       - name: k8s-jenkins-volume

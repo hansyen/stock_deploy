@@ -6,14 +6,13 @@ metadata:
   labels:
     app: k8s-jenkins
 spec:
-#  type: LoadBalancer
-#  loadBalancerIP: 114.32.6.178
-#  loadBalancerIP: 192.168.99.105
+  type: LoadBalancer
+  loadBalancerIP: 104.199.217.0 # 對外IP
   ports:
     - protocol: TCP
       port: 80  # 對外開放的port
       targetPort: 1689  # pod 所用的port
       name: http
-#      nodePort: 30750  # 外面接近來的port
   selector:
     app: k8s-jenkins
+    tier: web
